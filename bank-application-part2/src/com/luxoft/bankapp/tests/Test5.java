@@ -15,10 +15,10 @@ import com.luxoft.bankapp.domain.Gender;
 import com.luxoft.bankapp.service.BankDataLoaderService;
 
 public class Test5 {
-	Set<Client> clients = new HashSet<Client>(); 
+	Set<Client> clients = new HashSet<>();
 	String clientsFile = "files/clients.txt";
 	String testSerialFile = "files/bank.ser";
-	
+
 	@Before
 	public void initializeClients(){
 		clients.add(new Client(("John"), Gender.MALE));
@@ -32,7 +32,7 @@ public class Test5 {
 		clients.add(new Client(("Frank"), Gender.MALE));
 		clients.add(new Client(("George"), Gender.MALE));
 	}
-	
+
 	@Test
 	public void testLoadFeed() {
 		Bank bank = new Bank();
@@ -40,7 +40,7 @@ public class Test5 {
 		bankDataLoaderService.readClients(clientsFile);
 		assertEquals(10, bank.getClients().size());
 		assertTrue(bank.getClients().containsAll(clients));
-		
+
 		for(Client client : bank.getClients()) {
 			assertEquals(1, client.getAccounts().size());
 		}
