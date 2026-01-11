@@ -68,4 +68,14 @@ public class CheckingAccount extends AbstractAccount {
                 Double.parseDouble(overdraft),
                 new Currency(currency));
     }
+
+    @Override
+    public CheckingAccount clone() {
+        CheckingAccount clone = (CheckingAccount) super.clone();
+        if (this.currency != null) {
+            clone.currency = new Currency(this.currency.getCode());
+            clone.currency.setCountry(this.currency.getCountry());
+        }
+        return clone;
+    }
 }

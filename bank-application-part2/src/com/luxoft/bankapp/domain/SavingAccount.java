@@ -15,34 +15,43 @@ public class SavingAccount extends AbstractAccount {
 		super(id, amount);
 		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
 	}
-	
+
 	public SavingAccount(int id, double amount, Currency currency) {
 		super(id, amount);
 		this.currency = currency;
 		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
 	}
-	
+
 	public Currency getCurrency() {
 		return currency;
 	}
-	
+
 	@Override
 	public String toString() {
 		Formatter fmt = new Formatter(Locale.US);
-		String stringAccount = fmt.format("Saving account %d, balance: %.2f", getId(), balance).toString(); 
+		String stringAccount = fmt.format("Saving account %d, balance: %.2f", getId(), balance).toString();
 		fmt.close();
 		return stringAccount;
 	}
-	
+
 	public static Account parse(Params params) {
 		String id = params.get("id");
 		String balance = params.get("balance");
 		String currency = params.get("currency");
-		
+
         return new SavingAccount(
-        		Integer.parseInt(id), 
+        		Integer.parseInt(id),
         		Double.parseDouble(balance),
         		new Currency(currency));
     }
-	
+
+    @Override
+    public SavingAccount clone() {
+        SavingAccount clone = (SavingAccount) super.clone();
+        if (this.currency != null) {
+           clone.currency = new Currency(this.currency.getCode());
+           clone.currency.setCountry(this.currency.getCountry());
+        }
+        return clone;
+    }
 }
